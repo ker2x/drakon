@@ -2,10 +2,191 @@
 #include "megabot.h"
 
 
+static void clean_program_opt(
+    PROGRAM_OPT *program_opt
+);
+
+static void usage(void);
+
+static void clean_program_opt(
+    PROGRAM_OPT *program_opt
+) {
+}
+
+static void usage(void) {
+    /* item 25 */
+    printf("\nUsage : markovbot -s <server> -c <channel> -f <brain> [-h]\n" \
+      "\t-h : show usage\n" \
+      "\t-s <server>   : irc server hostname\n" \
+      "\t-c <channel> : channel name\n" \
+      "\t-f <brain> : path to brain file\n" \
+      "\n" \
+    );
+    return;
+    
+}
+
 int main(
     int argc,
     char **argv
 ) {
+    /* item 33 */
+    // Init variable
+    int EXIT_CODE = 0;
+    static PROGRAM_OPT *program_opt = NULL;
+    /* item 71 */
+    program_opt = (PROGRAM_OPT *)malloc(sizeof(PROGRAM_OPT));
+    
+    /* item 72 */
+    if ((program_opt == NULL) || (!(parse_command_line_option(
+    argc, argv, program_opt) == 0))) {
+        /* item 34 */
+        EXIT_CODE = 1;
+        goto item_75;
+    } else {
+    }
+    
+    /* item 81 */
+    if (EXIT_CODE != 0) {
+    } else {
+    }
+    
+    item_75:
+    clean_program_opt(program_opt);
+    /* item 35 */
+    return(EXIT_CODE);
+    return;
+    
+}
+
+int parse_command_line_option(
+    int argc,
+    char **argv,
+    PROGRAM_OPT *program_opt
+) {
+    /* item 37 */
+    int c;
+    int opterr = 1;
+    int s_opt = 0;
+    int c_opt = 0;
+    int f_opt = 0;
+    int h_opt = 0;
+    char *c_value = NULL;
+    char *s_value = NULL;
+    char *f_value = NULL;
+    int have_error = 0;
+    
+    item_36:
+    if ((c = getopt(argc, argv, ":hs:c:f:")) != -1 && have_error == 0) {
+    } else {
+        goto item_82;
+    }
+    
+    /* item 380001 */
+    if (c == 's') {
+        /* item 63 */
+        s_opt = 1;
+        /* item 65 */
+        program_opt->server = optarg;
+        goto item_36;
+    } else {
+    }
+    
+    /* item 380002 */
+    if (c == 'c') {
+        /* item 64 */
+        c_opt = 1;
+        /* item 66 */
+        program_opt->channel = optarg;
+        goto item_36;
+    } else {
+    }
+    
+    /* item 380003 */
+    if (c == 'f') {
+        /* item 100 */
+        f_opt = 1;
+        /* item 101 */
+        program_opt->brainfile = optarg;
+        goto item_36;
+    } else {
+    }
+    
+    /* item 380004 */
+    if (c == 'h') {
+        /* item 94 */
+        h_opt = 1;
+        goto item_58;
+    } else {
+    }
+    
+    /* item 380005 */
+    if (c == '?') {
+        /* item 92 */
+        fprintf(stderr,
+        "Unknown option -%c.\n",
+        optopt);
+        goto item_58;
+    } else {
+    }
+    
+    /* item 380006 */
+    if (c == ':') {
+        /* item 109 */
+        fprintf(stderr,
+        "Option -%c require an argument !!.\n",
+        optopt);
+    } else {
+        /* item 62 */
+        fprintf(stderr,
+        "Unknown Error, aborting.\n");
+    }
+    
+    item_58:
+    have_error = 1;
+    goto item_36;
+    
+    item_82:
+    if (s_opt != 1) {
+        /* item 84 */
+        fprintf(stderr,
+        "-s argument is mandatory\n");
+        /* item 89 */
+        have_error = 1;
+    } else {
+    }
+    
+    /* item 83 */
+    if (c_opt != 1) {
+        /* item 85 */
+        fprintf(stderr,
+        "-c argument is mandatory\n");
+        /* item 90 */
+        have_error = 1;
+    } else {
+    }
+    
+    /* item 102 */
+    if (f_opt != 1) {
+        /* item 103 */
+        fprintf(stderr,
+        "-f argument is mandatory\n");
+        /* item 104 */
+        have_error = 1;
+    } else {
+    }
+    
+    /* item 67 */
+    if (have_error == 1) {
+        /* item 93 */
+        usage();
+        /* item 69 */
+        return 1;
+    } else {
+        /* item 96 */
+        return 0;
+    }
+    
 }
 
 
