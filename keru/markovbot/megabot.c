@@ -11,6 +11,10 @@ static void usage(void);
 static void clean_program_opt(
     PROGRAM_OPT *program_opt
 ) {
+    /* item 110 */
+    fprintf(stderr, "clean_program_opt : TODO\n");
+    return;
+    
 }
 
 static void usage(void) {
@@ -68,16 +72,15 @@ int parse_command_line_option(
     int c;
     int opterr = 1;
     int s_opt = 0;
+    int p_opt = 0;
+    int n_opt = 0;
     int c_opt = 0;
     int f_opt = 0;
     int h_opt = 0;
-    char *c_value = NULL;
-    char *s_value = NULL;
-    char *f_value = NULL;
     int have_error = 0;
     
     item_36:
-    if ((c = getopt(argc, argv, ":hs:c:f:")) != -1 && have_error == 0) {
+    if ((c = getopt(argc, argv, ":hs:p:n:c:f:")) != -1 && have_error == 0) {
     } else {
         goto item_82;
     }
@@ -93,6 +96,26 @@ int parse_command_line_option(
     }
     
     /* item 380002 */
+    if (c == 'p') {
+        /* item 115 */
+        p_opt = 1;
+        /* item 117 */
+        program_opt->port = optarg;
+        goto item_36;
+    } else {
+    }
+    
+    /* item 380003 */
+    if (c == 'n') {
+        /* item 116 */
+        n_opt = 1;
+        /* item 118 */
+        program_opt->nick = optarg;
+        goto item_36;
+    } else {
+    }
+    
+    /* item 380004 */
     if (c == 'c') {
         /* item 64 */
         c_opt = 1;
@@ -102,7 +125,7 @@ int parse_command_line_option(
     } else {
     }
     
-    /* item 380003 */
+    /* item 380005 */
     if (c == 'f') {
         /* item 100 */
         f_opt = 1;
@@ -112,7 +135,7 @@ int parse_command_line_option(
     } else {
     }
     
-    /* item 380004 */
+    /* item 380006 */
     if (c == 'h') {
         /* item 94 */
         h_opt = 1;
@@ -120,7 +143,7 @@ int parse_command_line_option(
     } else {
     }
     
-    /* item 380005 */
+    /* item 380007 */
     if (c == '?') {
         /* item 92 */
         fprintf(stderr,
@@ -130,11 +153,11 @@ int parse_command_line_option(
     } else {
     }
     
-    /* item 380006 */
+    /* item 380008 */
     if (c == ':') {
         /* item 109 */
         fprintf(stderr,
-        "Option -%c require an argument !!.\n",
+        "Option -%c require an argument.\n",
         optopt);
     } else {
         /* item 62 */
@@ -153,6 +176,20 @@ int parse_command_line_option(
         "-s argument is mandatory\n");
         /* item 89 */
         have_error = 1;
+    } else {
+    }
+    
+    /* item 130 */
+    if (p_opt != 1) {
+        /* item 131 */
+        program_opt->port = "6667";
+    } else {
+    }
+    
+    /* item 134 */
+    if (n_opt != 1) {
+        /* item 135 */
+        program_opt->nick = "markovbot";
     } else {
     }
     
